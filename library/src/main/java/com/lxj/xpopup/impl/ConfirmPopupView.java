@@ -2,13 +2,18 @@ package com.lxj.xpopup.impl;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+
+import android.graphics.Color;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lxj.xpopup.R;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.CenterPopupView;
+import com.lxj.xpopup.core.PopupInfo;
 import com.lxj.xpopup.interfaces.OnCancelListener;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
 
@@ -20,21 +25,18 @@ public class ConfirmPopupView extends CenterPopupView implements View.OnClickLis
     OnCancelListener cancelListener;
     OnConfirmListener confirmListener;
     TextView tv_title, tv_content, tv_cancel, tv_confirm;
-    String title, content, hint, cancelText, confirmText;
-    boolean isHideCancel = false;
-
-    public ConfirmPopupView(@NonNull Context context) {
-        super(context);
-    }
+    CharSequence title, content, hint, cancelText, confirmText;
+    public boolean isHideCancel = false;
 
     /**
-     * 绑定已有布局
-     * @param layoutId 要求布局中必须包含的TextView以及id有：tv_title，tv_content，tv_cancel，tv_confirm
-     * @return
+     *
+     * @param context
+     * @param bindLayoutId layoutId 要求布局中必须包含的TextView以及id有：tv_title，tv_content，tv_cancel，tv_confirm
      */
-    public ConfirmPopupView bindLayout(int layoutId){
-        bindLayoutId = layoutId;
-        return this;
+    public ConfirmPopupView(@NonNull Context context, int bindLayoutId) {
+        super(context);
+        this.bindLayoutId = bindLayoutId;
+        addInnerContent();
     }
 
     @Override
@@ -49,8 +51,14 @@ public class ConfirmPopupView extends CenterPopupView implements View.OnClickLis
         tv_content = findViewById(R.id.tv_content);
         tv_cancel = findViewById(R.id.tv_cancel);
         tv_confirm = findViewById(R.id.tv_confirm);
-
-        if(bindLayoutId==0) applyPrimaryColor();
+        tv_content.setMovementMethod(LinkMovementMethod.getInstance());
+        if(bindLayoutId==0) {
+            if(popupInfo.isDarkTheme){
+                applyDarkTheme();
+            }else {
+                applyPrimaryColor();
+            }
+        }
 
         tv_cancel.setOnClickListener(this);
         tv_confirm.setOnClickListener(this);
@@ -72,12 +80,44 @@ public class ConfirmPopupView extends CenterPopupView implements View.OnClickLis
         if (!TextUtils.isEmpty(confirmText)) {
             tv_confirm.setText(confirmText);
         }
-        if (isHideCancel) tv_cancel.setVisibility(GONE);
+        if (isHideCancel) {
+            tv_cancel.setVisibility(GONE);
+            View divider = findViewById(R.id.xpopup_divider_h);
+            if(divider!=null) divider.setVisibility(GONE);
+        }
     }
 
     protected void applyPrimaryColor() {
-        tv_cancel.setTextColor(XPopup.getPrimaryColor());
+//        tv_cancel.setTextColor(XPopup.getPrimaryColor());
         tv_confirm.setTextColor(XPopup.getPrimaryColor());
+
+    }
+
+    public TextView getTitleTextView(){
+        return findViewById(R.id.tv_title);
+    }
+
+    public TextView getContentTextView(){
+        return findViewById(R.id.tv_content);
+    }
+
+    public TextView getCancelTextView(){
+        return findViewById(R.id.tv_cancel);
+    }
+
+    public TextView getConfirmTextView(){
+        return findViewById(R.id.tv_confirm);
+    }
+    @Override
+    protected void applyDarkTheme() {
+        super.applyDarkTheme();
+        tv_title.setTextColor(getResources().getColor(R.color._xpopup_white_color));
+        tv_content.setTextColor(getResources().getColor(R.color._xpopup_white_color));
+        tv_cancel.setTextColor(getResources().getColor(R.color._xpopup_white_color));
+        tv_confirm.setTextColor(getResources().getColor(R.color._xpopup_white_color));
+        findViewById(R.id.xpopup_divider).setBackgroundColor(getResources().getColor(R.color._xpopup_dark_color));
+        findViewById(R.id.xpopup_divider_h).setBackgroundColor(getResources().getColor(R.color._xpopup_dark_color));
+        ((ViewGroup)tv_title.getParent()).setBackgroundResource(R.drawable._xpopup_round3_dark_bg);
     }
 
     public ConfirmPopupView setListener(OnConfirmListener confirmListener, OnCancelListener cancelListener) {
@@ -86,25 +126,20 @@ public class ConfirmPopupView extends CenterPopupView implements View.OnClickLis
         return this;
     }
 
-    public ConfirmPopupView setTitleContent(String title, String content, String hint) {
+    public ConfirmPopupView setTitleContent(CharSequence title, CharSequence content, CharSequence hint) {
         this.title = title;
         this.content = content;
         this.hint = hint;
         return this;
     }
 
-    public ConfirmPopupView setCancelText(String cancelText) {
+    public ConfirmPopupView setCancelText(CharSequence cancelText) {
         this.cancelText = cancelText;
         return this;
     }
 
-    public ConfirmPopupView setConfirmText(String confirmText) {
+    public ConfirmPopupView setConfirmText(CharSequence confirmText) {
         this.confirmText = confirmText;
-        return this;
-    }
-
-    public ConfirmPopupView hideCancelBtn() {
-        isHideCancel = true;
         return this;
     }
 

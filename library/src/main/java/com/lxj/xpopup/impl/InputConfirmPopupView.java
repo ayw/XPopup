@@ -4,9 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import com.lxj.xpopup.R;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnCancelListener;
@@ -19,22 +19,17 @@ import com.lxj.xpopup.util.XPopupUtils;
  */
 public class InputConfirmPopupView extends ConfirmPopupView implements View.OnClickListener{
 
-    public InputConfirmPopupView(@NonNull Context context) {
-        super(context);
-    }
-
     /**
-     * 绑定已有布局
-     * @param layoutId 在Confirm弹窗基础上需要增加一个id为et_input的EditText
-     * @return
+     *
+     * @param context
+     * @param bindLayoutId  在Confirm弹窗基础上需要增加一个id为et_input的EditText
      */
-    public InputConfirmPopupView bindLayout(int layoutId){
-        bindLayoutId = layoutId;
-        return this;
+    public InputConfirmPopupView(@NonNull Context context, int bindLayoutId) {
+        super(context, bindLayoutId);
     }
 
-    AppCompatEditText et_input;
-    public String inputContent;
+    EditText et_input;
+    public CharSequence inputContent;
     @Override
     protected void initPopupContent() {
         super.initPopupContent();
@@ -50,22 +45,23 @@ public class InputConfirmPopupView extends ConfirmPopupView implements View.OnCl
         applyPrimary();
     }
 
-    public AppCompatEditText getEditText() {
+    public EditText getEditText() {
         return et_input;
     }
 
     protected void applyPrimary(){
         super.applyPrimaryColor();
-        XPopupUtils.setCursorDrawableColor(et_input, XPopup.getPrimaryColor());
-        et_input.post(new Runnable() {
-            @Override
-            public void run() {
-                BitmapDrawable defaultDrawable = XPopupUtils.createBitmapDrawable(getResources(), et_input.getMeasuredWidth(), Color.parseColor("#888888"));
-                BitmapDrawable focusDrawable = XPopupUtils.createBitmapDrawable(getResources(), et_input.getMeasuredWidth(), XPopup.getPrimaryColor());
-                et_input.setBackgroundDrawable(XPopupUtils.createSelector(defaultDrawable, focusDrawable));
-            }
-        });
-
+        if(bindLayoutId==0){
+            XPopupUtils.setCursorDrawableColor(et_input, XPopup.getPrimaryColor());
+            et_input.post(new Runnable() {
+                @Override
+                public void run() {
+                    BitmapDrawable defaultDrawable = XPopupUtils.createBitmapDrawable(getResources(), et_input.getMeasuredWidth(), Color.parseColor("#888888"));
+                    BitmapDrawable focusDrawable = XPopupUtils.createBitmapDrawable(getResources(), et_input.getMeasuredWidth(), XPopup.getPrimaryColor());
+                    et_input.setBackgroundDrawable(XPopupUtils.createSelector(defaultDrawable, focusDrawable));
+                }
+            });
+        }
     }
 
     OnCancelListener cancelListener;

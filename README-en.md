@@ -2,10 +2,19 @@
 ![](https://api.bintray.com/packages/li-xiaojun/jrepo/xpopup/images/download.svg)  ![](https://img.shields.io/badge/platform-android-blue.svg)  ![](https://img.shields.io/badge/author-li--xiaojun-brightgreen.svg) ![](https://img.shields.io/badge/compileSdkVersion-26-blue.svg) ![](https://img.shields.io/badge/minSdkVersion-15-blue.svg) ![](https://img.shields.io/hexpm/l/plug.svg)
 ![](screenshot/logo.png)
 
+<a href="https://tracking.gitads.io/?repo=XPopup"><img src="https://images.gitads.io/XPopup" style="width: 80%;height:auto"/></a>
+
+### You can click the Ad Image to buy me a coffee!!!
+
 ### English | [中文]()
 
 Powerful，material UI，elegant interaction general popup！can absolutely replace Dialog，PopupWindow，PopupMenu，BottomSheet，DrawerLayout，Spinner. With built-in many beautiful animation，you can custom your UI and logic！
 
+## Feature
+- support Androidx
+- support RTL layout
+- beautiful animation and strong customization
+- you will love it !
 
 ## ScreenShot
 
@@ -30,9 +39,9 @@ Powerful，material UI，elegant interaction general popup！can absolutely repl
 ## Download Apk
 
 Scan qrcode to download Demo.apk：
-![](screenshot/download.png)
+![](screenshot/download.jpeg)
 
-If the qrcode is invisible，[click me to download Demo.apk](https://fir.im/2q63)
+如果二维码图片不可见，[点我下载Demo体验](http://d.7short.com/2q63)
 
 
 
@@ -40,9 +49,7 @@ If the qrcode is invisible，[click me to download Demo.apk](https://fir.im/2q63
 
 First, you need add gradle dependency：
 ```groovy
-implementation 'com.lxj:xpopup:1.8.10'
-//for androidx.
-implementation 'com.lxj:xpopup:1.8.10-x'
+implementation 'com.lxj:xpopup:1.9.0'
 ```
 
 Second, you also need these：
@@ -96,6 +103,10 @@ Base on information provided by some friends，they are using Xpopup:
 - 易果无忧
 - Moo日记， 下载地址 https://www.wandoujia.com/apps/8044755
 - 智华泊位(重庆即停科技有限公司)
+- 中英互译（梅州小白科技有限责任公司 https://sj.qq.com/myapp/detail.htm?apkName=com.messi.languagehelper）
+- 采蘑菇（https://a.app.qq.com/o/simple.jsp?pkgname=com.lx.cmg）
+- 蜂鸟屋APP，蜂鸟屋SAAS 平板
+- 茶臻选（https://android.myapp.com/myapp/detail.htm?apkName=com.aiso.tea&ADTAG=mobile）
 
 
 

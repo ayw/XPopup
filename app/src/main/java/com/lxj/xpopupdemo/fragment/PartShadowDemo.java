@@ -13,6 +13,7 @@ import com.lxj.easyadapter.EasyAdapter;
 import com.lxj.easyadapter.MultiItemTypeAdapter;
 import com.lxj.easyadapter.ViewHolder;
 import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.enums.PopupPosition;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.lxj.xpopup.interfaces.SimpleCallback;
@@ -70,7 +71,7 @@ public class PartShadowDemo extends BaseFragment implements View.OnClickListener
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        builder.asAttachList(new String[]{"置顶", "编辑", "删除"}, null,0,10, new OnSelectListener() {
+                        builder.asAttachList(new String[]{"置顶", "编辑", "删除"}, null, new OnSelectListener() {
                             @Override
                             public void onSelect(int position, String text) {
                                 toast(text);
@@ -91,22 +92,23 @@ public class PartShadowDemo extends BaseFragment implements View.OnClickListener
     }
 
     private void showPartShadow(final View v){
-//        if(popupView!=null && popupView.isShow())return;
         if(popupView==null){
             popupView = (CustomPartShadowPopupView) new XPopup.Builder(getContext())
                     .atView(v)
+//                    .isClickThrough(true)
+//                    .dismissOnTouchOutside(false)
 //                    .isCenterHorizontal(true)
                     .autoOpenSoftInput(true)
-//                    .offsetX(200)
+//                    .offsetY(100)
+//                    .offsetX(100)
 //                .dismissOnTouchOutside(false)
                     .setPopupCallback(new SimpleCallback() {
                         @Override
-                        public void onShow() {
+                        public void onShow(BasePopupView popupView) {
                             toast("显示了");
                         }
                         @Override
-                        public void onDismiss() {
-//                            popupView = null;
+                        public void onDismiss(BasePopupView popupView) {
                         }
                     })
                     .asCustom(new CustomPartShadowPopupView(getContext()));
